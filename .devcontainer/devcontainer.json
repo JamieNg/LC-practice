@@ -1,24 +1,20 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/alpine
+// README at: https://github.com/devcontainers/templates/tree/ma2in/src/alpine
 {
   "name": "Alpine",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "image": "mcr.microsoft.com/devcontainers/base:alpine-3.18",
-  "features": {
-    "ghcr.io/devcontainers/features/node:1": {
-      "nodeGypDependencies": true,
-      "version": "lts",
-      "nvmVersion": "latest"
-    }
-  },
   "customizations": {
     "vscode": {
       "settings": {
         "editor.formatOnSave": true,
         "leetcode.workspaceFolder": "~"
       },
-      "extensions": ["LeetCode.vscode-leetcode", "esbenp.prettier-vscode"]
+      "extensions": ["LeetCode.vscode-leetcode", "WallabyJs.wallaby-vscode"]
     }
+  },
+  "features": {
+    "ghcr.io/cirolosapio/devcontainers-features/alpine-node:0": {}
   }
 
   // Features to add to the dev container. More info: https://containers.dev/features.
