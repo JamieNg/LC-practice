@@ -5,36 +5,28 @@
 var threeSum = function (nums) {
   if (nums.length === 3)
     return nums.reduce((sum, num) => sum + num, 0) === 0 ? [nums] : [];
-  let indexes = [...nums.keys()];
-  const combinations = indexes.flatMap((v, i) =>
-    indexes.slice(i + 1).map((w) => [v, w])
-  );
-  const map = new Map();
-  for (let c of combinations) {
-    const key = nums[c[0]] + nums[c[1]];
-    const pair = c;
-    if (map.has(key)) {
-      map.set(key, map.get(key).concat([pair]));
-    } else {
-      map.set(key, [pair]);
-    }
-  }
-  let results = [];
-  let added = [];
+  const results = [];
+  nums.sort((a, b) => a - b);
+  const added = [];
   for (let i = 0; i < nums.length; i++) {
-    const pairs = map.get(-nums[i]);
-    if (!pairs) continue;
-    for (let p of pairs) {
-      if (p.includes(i)) continue;
-      const item = [nums[i], nums[p[0]], nums[p[1]]];
-      item.sort();
-      if (!added.includes(item.join())) {
-        results.push(item);
-        added.push(item.join());
+    if (added.includes(nums[i])) continue;
+    else added.push(nums[i]);
+    for (let l = i + 1, r = nums.length - 1; l < r; ) {
+      const sum = nums[i] + nums[l] + nums[r];
+      if (sum === 0) {
+        results.push([nums[i], nums[l], nums[r]]);
+        while (nums[l] === nums[l + 1]) l++;
+        while (nums[r] === nums[r - 1]) r--;
+        l++;
+      } else if (sum > 0) {
+        r--;
+      } else {
+        l++;
       }
     }
   }
   return results;
 };
 
-threeSum([-1, 0, 1, 2, -1, -4]);
+threeSum([-1, 0, 1, 2, -1, -4, -2, -3, 3, 0, 4]);
+//[[-4,0,4],[-4,1,3],[-3,-1,4],[-3,0,3],[-3,1,2],[-2,-1,3],[-2,0,2],[-1,-1,2],[-1,0,1]]
