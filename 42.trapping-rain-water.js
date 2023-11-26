@@ -1,19 +1,19 @@
 var trap = function (height) {
-  let result = 0;
-
-  for (let [i, lMax, rMax] = [0, 0, 0]; i < height.length; i++) {
-    lMax = height[i] > height[lMax] ? i : lMax;
-    if (i > rMax) {
-      let k;
-      rMax = k = i;
-      while (k < height.length) {
-        rMax = height[k] > height[rMax] ? k : rMax;
-        k++;
-      }
+  let total = 0;
+  let lMax = height[0],
+    rMax = height[height.length - 1];
+  for (let l = 0, r = height.length - 1; l < r; ) {
+    if (lMax <= rMax) {
+      total += lMax - height[l];
+      l++;
+      lMax = Math.max(height[l], lMax);
+    } else {
+      total += rMax - height[r];
+      r--;
+      rMax = Math.max(height[r], rMax);
     }
-    result += Math.min(height[lMax], height[rMax]) - height[i];
   }
-  return result;
+  return total;
 };
 
 //expected 6
